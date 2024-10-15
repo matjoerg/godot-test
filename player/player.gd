@@ -15,8 +15,13 @@ func _process(delta):
 		velocity.x += 1
 	if Input.is_action_pressed("move_left"):
 		velocity.x -= 1
-	velocity = velocity.normalized() * speed
-	position += velocity * delta
+
+	if velocity.length() > 0:
+		velocity = velocity.normalized() * speed
+		$AnimatedSprite2D.play()
+	else:
+		$AnimatedSprite2D.stop()	
 	
+	position += velocity * delta
 	# Manual screen boundary check
 	position.x = clamp(position.x, 0, screen_size.x)
